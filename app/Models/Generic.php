@@ -48,7 +48,7 @@ class Generic extends Model
     }
     //CONSULTA ENCARGADA DE RETORNAR EL ULTIMO CONSECUTIVO 
     public function ultimoConsecutivo() {
-        $consecutivo = DB::table("QUEJAS")->max("CONSECUTIVO");
+        $consecutivo = DB::table("QUEJAS")->max("CONSECUTIVO") + 1;
 
         return $consecutivo;
     }

@@ -24,18 +24,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //RUTAS PARA LOS MODELOS GENERICOS Y RE UTILIZAR EN EL PROYECTO 
 Route::controller(GenericController::class)->group(function () {
-    Route::get('/tipodocumentos', 'tipoDocumentos');
-    Route::get('/grupopoblacion', 'grupoPoblacion');
-    Route::get('/grupoetnico', 'grupoEtnico');
-    Route::get('/departamentos', 'departamentos');
-    Route::get('/ciudades', 'ciudades');
-    Route::get('/areas', 'areas');
-    Route::get('/prestadores', 'prestadores');
-    Route::get('/sexos', 'tiposSexos');
-    Route::get('/zonas', 'zonas');
+   Route::get('/tipodocumentos', 'tipoDocumentos');
+   Route::get('/grupopoblacion', 'grupoPoblacion');
+   Route::get('/grupoetnico', 'grupoEtnico');
+   Route::get('/departamentos', 'departamentos');
+   Route::get('/ciudades', 'ciudades');
+   Route::get('/areas', 'areas');
+   Route::get('/prestadores', 'prestadores');
+   Route::get('/sexos', 'tiposSexos');
+   Route::get('/zonas', 'zonas');
+   Route::get('/ultimoconsecutivo', 'ultimoConsecutivo');
 });
 
 //RUTAS PARA LAS PQRS
 Route::controller(PqrsController::class)->group(function () {
-Route::get("/buscar", "search");
+    Route::get("/buscar", "search");
+    Route::get("/buscarpqrs","searchPqrs");
+    Route::post("/crearpqrs", "create");
 });
