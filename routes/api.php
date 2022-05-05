@@ -24,7 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//RUTAS PARA LOS MODELOS GENERICOS Y RE UTILIZAR EN EL PROYECTO
+//RUTAS PARA LOS MODELOS GENERICOS Y REUTILIZAR EN EL PROYECTO
 Route::controller(GenericController::class)->group(function () {
    Route::get('/tipodocumentos', 'tipoDocumentos');
    Route::get('/grupopoblacion', 'grupoPoblacion');
@@ -45,11 +45,11 @@ Route::controller(PqrsController::class)->group(function () {
     Route::post("/crearpqrs", "create");
     Route::post("/subirdrive","subirArchivoDrive");
 });
-//
+//RUTAS PARA LOS PDF
 Route::controller(PdfController::class)->group(function () {
     Route::get("/respuestapqrs", "pdfRespuestaPqrs");
 });
 
-Route::controller(GoogleDriveController::class)->group(function () {
-    Route::get("/drive", "googleDriveFileUpload");
-});
+// Route::controller(GoogleDriveController::class)->group(function () {
+//     Route::get("/drive", "googleDriveFileUpload");
+// });

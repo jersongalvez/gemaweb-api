@@ -20,7 +20,8 @@ class GoogleDriveController extends Controller{
         $file_path =  $archivo;
         $file = new \Google_Service_Drive_DriveFile();
         $file->setName($nombre);
-        $file->setParents(array("1xztn-H9PeuYaorKvEeJI9vaqY_z6uww_"));
+        // $file->setParents(array("1xztn-H9PeuYaorKvEeJI9vaqY_z6uww_"));
+        $file->setParents(array("18rX2wv0KZ-IE8Buf53CGuluM_zNOb2b5"));
         //$file->setDescription("archivo cargado");
         $file->setMimeType($tipo);
         $result = $service->files->create(

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class PqrsController extends Controller {
 
-    public function __construct(request $request) {
+    public function __construct() {
       $this->PqrsModel = new Pqrs();
       $this->GenericModel = new Generic();
       $this->Drive = new GoogleDriveController();
@@ -86,8 +86,6 @@ class PqrsController extends Controller {
       $name = $_FILES["archivo"]["name"];
       $tipo = $_FILES["archivo"]["type"];
       $tmp_name = $_FILES["archivo"]["tmp_name"];
-      $error = $_FILES["archivo"]["error"];
-      $size = $_FILES["archivo"]["size"];
       $archivoAct = explode(".", $name);
       $FileId = $this->Drive->googleDriveFileUpload($tmp_name, $tipo, $archivoAct[0]);
       $archivo = "https://drive.google.com/open?id=". $FileId;
