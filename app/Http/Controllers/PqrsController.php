@@ -5,48 +5,57 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pqrs;
 use App\Models\Generic;
+use App\Http\Controllers\GoogleDriveController;
+use Illuminate\Support\Facades\Storage;
 
 class PqrsController extends Controller {
-    
+
     public function __construct(request $request) {
       $this->PqrsModel = new Pqrs();
       $this->GenericModel = new Generic();
-        
-    }
-    // RETORNA UN AFILIADO EN LA BASE DE DATOS PARA MOSTRARLO EN EL PRINCIPAL DE LOS PQRS
-    public function search(request $request) {
-      $tpdocumento = $request->input("tp_documento");
-      $documento = $request->input("documento");
-      $fecha_expedicion = $request->input("fecha_expedicion");
-      $fechaAct = date("Y-m-d", strtotime($fecha_expedicion));
+      $this->Drive = new GoogleDriveController();
 
+    }
+
+    // RETORNA UN AFILIADO EN LA BASE DE DATOS PARA MOSTRARLO EN EL PRINCIPAL DE LOS PQRS
+    public function search($tpdocumento, $documento) {
       $usuario = $this->PqrsModel->search($tpdocumento, $documento);
-      
+
       if(count($usuario) > 0) {
          return response()->json([
            'usuario' => $usuario,
-         ], 200); 
-      }
-      else {
-         return "error";
-      }
-    }
-    // RETORNA UNA QUEJA EN LA BUSQUEDA DE PQRS    
-    public function searchPqrs() {
-      $pqrs = $this->PqrsModel->searchPqrs();
-
-      if (count($pqrs) > 0) {
-         return response()->json([
-            'pqrs' => $pqrs,
          ], 200);
       }
       else {
          return "error";
       }
     }
-    // CREACION DE LA PRERADICACION DE LA QUEJA 
+
+    // RETORNA UNA QUEJA EN LA BUSQUEDA DE PQRS
+    public function searchPqrs($tpdocumento, $documento, $radicado) {
+      $pqrs = $this->PqrsModel->searchPqrs($tpdocumento, $documento, $radicado);
+        if(count($pqrs) > 0 ){
+          return response()->json([
+             'pqrs' => $pqrs,
+          ], 200);
+        }
+        else {
+          return "error";
+        }
+
+    }
+    /*
+    METODO ENCARGADO DE SUBIR ARCHIVO A LA CARPETA GOOGLE DRIVE
+    folder = https://drive.google.com/drive/folders/1xztn-H9PeuYaorKvEeJI9vaqY_z6uww_?usp=sharing
+    json   = peak-orbit-339412-6d518d3aefda.json
+    clave  = 6d518d3aefdafb646084c455f2c00911c93f30b0
+    cuenta = soportepqrs@soportespqrs.iam.gserviceaccount.com
+    */
+    // CREACION DE LA PRERADICACION DE LA QUEJA
     public function create(request $request) {
+      $archivo = "NO ADJUNTADO";
       $consecutivo = $this->GenericModel->ultimoConsecutivo();
+      $paciente_rad = $request->input("paciente_rad");
       $tpdocumento = $request->input("tpdocumento");
       $documento = $request->input("documento");
       $expedicion = $request->input("expedicion");
@@ -57,8 +66,8 @@ class PqrsController extends Controller {
       $nacimiento = $request->input("nacimiento");
       $edad = $request->input("edad");
       $sexo = $request->input("sexo");
-      $poblacion = $request->input("poblacion");
-      $etnico = $request->input("etnico");
+      $poblacion = $request->input("poblacionespecial");
+      $etnico = $request->input("grupoetnico");
       $pais = $request->input("pais");
       $departamento = $request->input("departamento");
       $municipio = $request->input("municipio");
@@ -72,8 +81,17 @@ class PqrsController extends Controller {
       $area = $request->input("area");
       $zona = $request->input("zona");
       $descripcion = $request->input("descripcion");
-      $paciente_rad = $request->input("paciente_rad");
-
+      //SE RECUPERAN DATOS ENVIADOS DEL DOCUMENTO
+      if($_FILES){
+      $name = $_FILES["archivo"]["name"];
+      $tipo = $_FILES["archivo"]["type"];
+      $tmp_name = $_FILES["archivo"]["tmp_name"];
+      $error = $_FILES["archivo"]["error"];
+      $size = $_FILES["archivo"]["size"];
+      $archivoAct = explode(".", $name);
+      $FileId = $this->Drive->googleDriveFileUpload($tmp_name, $tipo, $archivoAct[0]);
+      $archivo = "https://drive.google.com/open?id=". $FileId;
+      }
       $pqrs = [
          "consecutivo" => $consecutivo,
          "tpdocumento" => $tpdocumento,
@@ -101,11 +119,19 @@ class PqrsController extends Controller {
          "area" => $area,
          "zona" => $zona,
          "descripcion" => $descripcion,
-         "paciente_rad" => $paciente_rad
+         "paciente_rad" => $paciente_rad,
+         "archivo" => $archivo
       ];
+
       $this->PqrsModel->create($pqrs);
       $this->createNovedades($pqrs);
+
+      return response()->json([
+        "consecutivo" => $consecutivo,
+        "archivo" => $archivo
+      ]);
     }
+
     // CREACION DE LA NOVEDAD PARA SER ENVIADO A EL AREA DE ASEGURAMIENTO
     public function createNovedades($pqrs) {
       $tpdocumento = $pqrs["tpdocumento"];
@@ -132,29 +158,29 @@ class PqrsController extends Controller {
       $correo = $pqrs["correo"];
 
       $novedades = [
-        "tpdocumento" => $tpdocumento, 
-        "documento" => $documento, 
-        "expedicion" => $expedicion, 
-        "pnombre" => $pnombre, 
-        "snombre" => $snombre, 
-        "papellido" => $papellido, 
-        "sapellido" => $sapellido, 
-        "nacimiento" => $nacimiento, 
-        "edad" => $edad, 
-        "sexo" => $sexo, 
-        "poblacion" => $poblacion, 
-        "etnico" => $etnico, 
-        "resguardo" => $resguardo, 
-        "comunidad" => $comunidad, 
-        "pais" => $pais, 
-        "departamento" => $departamento, 
-        "municipio" => $municipio, 
-        "direccion" => $direccion, 
-        "zona" => $zona, 
-        "celular" => $celular, 
-        "telefono" => $telefono, 
+        "tpdocumento" => $tpdocumento,
+        "documento" => $documento,
+        "expedicion" => $expedicion,
+        "pnombre" => $pnombre,
+        "snombre" => $snombre,
+        "papellido" => $papellido,
+        "sapellido" => $sapellido,
+        "nacimiento" => $nacimiento,
+        "edad" => $edad,
+        "sexo" => $sexo,
+        "poblacion" => $poblacion,
+        "etnico" => $etnico,
+        "resguardo" => $resguardo,
+        "comunidad" => $comunidad,
+        "pais" => $pais,
+        "departamento" => $departamento,
+        "municipio" => $municipio,
+        "direccion" => $direccion,
+        "zona" => $zona,
+        "celular" => $celular,
+        "telefono" => $telefono,
         "correo" => $correo
-      ]; 
+      ];
       $this->PqrsModel->createNovedades($novedades);
     }
 }
