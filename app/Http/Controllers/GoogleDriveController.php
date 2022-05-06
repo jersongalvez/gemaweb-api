@@ -9,14 +9,17 @@ use Illuminate\Http\Request;
 require_once '../public/api-google/vendor/autoload.php';
 class GoogleDriveController extends Controller{
 
-  //METODO ENCARGADO DE CREAR UN ARCHIVO EN LA CARPETA DE GOOGLE DRIVE
-  public function googleDriveFileUpload($archivo, $tipo, $nombre) {
+  public function __construct(){
     putenv('GOOGLE_APPLICATION_CREDENTIALS=../public/json/soportespqrs-b184d062e113.json');
-      $client = new Google_Client();
-      $client->useApplicationDefaultCredentials();
-      $client->setScopes(['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata']);
+    $this->client = new Google_Client();
+  }
+
+  //METODO ENCARGADO DE CREAR UN ARCHIVO EN LA CARPETA DE GOOGLE DRIVE RETORNA EL ID DEL DOCUMENTO INGRESADO
+  public function googleDriveFileUpload($archivo, $tipo, $nombre) {
+      $this->client->useApplicationDefaultCredentials();
+      $this->client->setScopes(['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata']);
       try {
-        $service = new \Google_Service_Drive($client);
+        $service = new \Google_Service_Drive($this->client);
         $file_path =  $archivo;
         $file = new \Google_Service_Drive_DriveFile();
         $file->setName($nombre);
@@ -42,7 +45,24 @@ class GoogleDriveController extends Controller{
         echo $e->getMessage();
       }
   }
-}
 
+  //FUNCTION QUE ME PERMITE CREAR UNA CARPETA EN GOOGLE DRIVE RETORNA EL ID DE LA CARPETA
+  public function googleDriveCreateFolder() {
+    $service = new \Google_Service_Drive($this->client);
+    $file = new \Google_Service_Drive_DriveFile();
+    $this->client->useApplicationDefaultCredentials();
+    $this->client->setScopes(['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.appdata']);
+    $file->setName("nombre_folder");
+    $file->setParents(array("1xztn-H9PeuYaorKvEeJI9vaqY_z6uww_"));
+    $file->setMimeType('application/vnd.google-apps.folder');
+
+    $folder = $service->files->create(
+      $file
+    );
+
+    return $folder->id;
+  }
+
+}
 ?>
 

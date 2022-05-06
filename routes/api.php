@@ -8,21 +8,12 @@ use App\Http\Controllers\PqrsController;
 use App\Http\Controllers\GenericController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\GoogleDriveController;
+use App\Http\Controllers\EmailController;
 
-/*
-|--------------------------<------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+/******************************************************
+ *         RUTAS PARA LOS METODOS GLOBALES
+*******************************************************/
 
 //RUTAS PARA LOS MODELOS GENERICOS Y REUTILIZAR EN EL PROYECTO
 Route::controller(GenericController::class)->group(function () {
@@ -38,6 +29,28 @@ Route::controller(GenericController::class)->group(function () {
    Route::get('/ultimoconsecutivo', 'ultimoConsecutivo');
 });
 
+//RUTAS PARA LOS PDF
+Route::controller(PdfController::class)->group(function () {
+    Route::get("/respuestapqrs", "pdfRespuestaPqrs");
+});
+
+//RUTAS PARA ANEXAR RUTAS PARA EL GOOGLE DRIVE
+Route::controller(GoogleDriveController::class)->group(function () {
+    Route::get("/drive", "googleDriveCreateFolder");
+});
+
+/*
+ RUTAS PARA EL ENVIO DE CORREO ELECTRONICOS RECOMENDABLE USAR
+ MAILTRAP HERRAMIENTA QUE FUNCIONA COMO RECEPCION DE EMAIL
+*/
+Route::controller(EmailController::class)->group(function () {
+    Route::get('/notificaciones', 'sendEmailNotification');
+});
+
+/******************************************************
+ *     RUTAS PARA LOS MODULOS DE LOS PRESTADORES
+*******************************************************/
+
 //RUTAS PARA LAS PQRS
 Route::controller(PqrsController::class)->group(function () {
     Route::get("/buscar/{tpdocumento}/{documento}", "search");
@@ -45,11 +58,8 @@ Route::controller(PqrsController::class)->group(function () {
     Route::post("/crearpqrs", "create");
     Route::post("/subirdrive","subirArchivoDrive");
 });
-//RUTAS PARA LOS PDF
-Route::controller(PdfController::class)->group(function () {
-    Route::get("/respuestapqrs", "pdfRespuestaPqrs");
-});
 
-// Route::controller(GoogleDriveController::class)->group(function () {
-//     Route::get("/drive", "googleDriveFileUpload");
-// });
+
+/******************************************************
+ *         RUTAS PARA LOS MODULOS INTERNOS
+*******************************************************/
