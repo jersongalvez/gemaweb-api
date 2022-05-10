@@ -44,7 +44,7 @@ Route::controller(GoogleDriveController::class)->group(function () {
  MAILTRAP HERRAMIENTA QUE FUNCIONA COMO RECEPCION DE EMAIL
 */
 Route::controller(EmailController::class)->group(function () {
-    Route::get('/notificaciones', 'sendEmailNotification');
+    Route::post('/notificaciones', 'sendEmailNotification');
 });
 
 /******************************************************

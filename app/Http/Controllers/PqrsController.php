@@ -6,14 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\Pqrs;
 use App\Models\Generic;
 use App\Http\Controllers\GoogleDriveController;
+use App\Http\Controllers\EmailController;
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Facades\Storage;
 
 class PqrsController extends Controller {
 
     public function __construct() {
+      //INSTANCIA DE LOS MODELOS DE LA BASE DE DATOS
       $this->PqrsModel = new Pqrs();
       $this->GenericModel = new Generic();
+      //INSTANCIA DE CONTROLADORES
       $this->Drive = new GoogleDriveController();
+      $this->Email = new EmailController();
 
     }
 
@@ -123,6 +129,7 @@ class PqrsController extends Controller {
 
       $this->PqrsModel->create($pqrs);
       $this->createNovedades($pqrs);
+      //$this->Email->sendEmailNotification();
 
       return response()->json([
         "consecutivo" => $consecutivo,

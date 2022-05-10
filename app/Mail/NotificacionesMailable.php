@@ -27,7 +27,6 @@ class NotificacionesMailable extends Mailable
      * @return $this
      */
     public function build(){
-        // $data = ["variable" => "variable"];
         return $this->view('emails.notificaciones');
     }
 }
