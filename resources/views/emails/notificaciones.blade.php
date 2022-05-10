@@ -20,40 +20,50 @@
         .img-center {
             text-align: center;
         }
+        .container-border {
+            border: 2px solid #2332CE;
+            width: 700px !important;
+            margin-left: 400px;
+            padding: 10px;
+            border-radius: 20px;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
-  <div class="container-fluid color-blue">
+  <div class="container-border">
+  <div class="container-fluid color-blue" style="border-radius: 10px;">
       <br><br><br><br>
   </div>
-  <br>
-  <br>
-  <div class="container center" style="margin-left: 350px ;">
-    <img src="https://saludmadreymujer.com/archivos/img/logo.png" width="90px" height="90px" style="margin-left: 450px ;">
-    <br>
-    <br>
-    <p>¿Como vas?</p>
-    <p>Te contamos que recibimos una solicitud de PQRS</p>
-    <p>Expuesta para la EPSI o/y IPS con los siguientes datos.</p>
-  </div>
+      <br>
+      <br>
+      <div class="container center" style="margin-left: 40px;">
+        <img src="https://saludmadreymujer.com/archivos/img/logo.png" width="90px" height="90px" style="margin-left: 250px ;">
+        <br>
+        <br>
+        <p>¿Como vas?</p>
+        <p>Te contamos que recibimos una solicitud de PQRSF ( {{ $pqrs }} )</p>
+        <p>Expuesta para la EPSI o/y IPS con los siguientes datos.</p>
+    </div>
 
-  <div class="container" style="margin-left: 350px ;">
+    <div class="container" style="margin-left: 40px;">
       <h4>PQRS EXPUESTA POR EL USUARIO<span> {{ $nombre}}</span> </h4>
-      <h5>Tipo de Documento: {{ $tpdocumento }}</h5>
-      <h5>Numero de Documento: {{ $documento }}</h5>
-      <h5>Numero Telefonico: {{ $telefono }}</h5>
-      <h5>Correo Electronico: {{ $correo }} </h5>
-  </div>
-  <div class="container" style="margin-left: 350px; padding-right: 200px;" width="200px;" >
-      <h3>Mensaje</h3>
-      <P> {{ $mensaje }}</P>
-  </div>
-  <div class="container">
-      <img src="https://saludmadreymujer.com/archivos/img/pqrs.png" >
-  </div>
-
-  <div class="container-fluid color-blue">
+      <h5>TIPO DE DOCUMENTO: {{ $tpdocumento }}</h5>
+      <h5>NUMERO DE DOCUMENTO: {{ $documento }}</h5>
+      <h5>NUMERO TELEFONICO: {{ $telefono }}</h5>
+      <h5>CORREO ELECTRONICO: {{ $correo }} </h5>
+    </div>
+    <div class="container" style=" padding-left: 40px;" width="200px;" >
+        <h3>MENSAJE</h3>
+        <P> {{ $mensaje }}</P>
+    </div>
+    <div class="container">
+        <img src="https://saludmadreymujer.com/archivos/img/pqrs.png" width="400px;">
+    </div>
+    <div class="container-fluid color-blue" style="border-radius: 10px;">
       <br><br><br><br>
-  </div>
+    </div>
+</div>
+
 </body>
 </html>

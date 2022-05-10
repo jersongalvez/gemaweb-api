@@ -16,6 +16,7 @@ class EmailController extends Controller{
     public function sendEmailNotification(request $request) {
         // $correo = new NotificacionesMailable;
         // Mail::to('jerson.galvez@pijaossalud.com.co')->send($correo);
+        $pqrs = $request->post("pqrs");
         $nombre = $request->post("nombre");
         $tpdocumento =  $request->post("tpdocumento");
         $documento = $request->post("documento");
@@ -23,6 +24,7 @@ class EmailController extends Controller{
         $correo = $request->post("correo");
         $mensaje = $request->post("mensaje");
         $data = array(
+            'pqrs' => $pqrs,
             'nombre'=> $nombre,
             'tpdocumento' => $tpdocumento,
             'documento' => $documento,
@@ -32,7 +34,7 @@ class EmailController extends Controller{
         );
         // // $correo = new NotificacionesMailable;
         Mail::send('emails.notificaciones', $data, function ($message) {
-            $message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS');
+            $message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
         });
     }
 }
