@@ -52,6 +52,14 @@ class Generic extends Model
 
         return $consecutivo;
     }
+    //METODO ENCARGADO DE ACTUALIZAR LOS CONSECUTIVOS DE LA EPSI
+    public function actualizarConsecutivo($tipo, $consecutivo) {
+      DB::table("CONSECUTIVOS")
+      ->where("TIP_RADICACION", $tipo)
+      ->update([
+        "CON_RADICACION" => $consecutivo
+      ]);
+    }
     //CONSULTA ENCARGADA DE RETORNAR TODOS LOS PRESTADORES IPS
     public function prestadores() {
         $prestadores = DB::table("PRESTADORES")->orderBy("NOM_PRESTADOR", "ASC")->get();

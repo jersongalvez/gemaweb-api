@@ -61,6 +61,7 @@ class PqrsController extends Controller {
     public function create(request $request) {
       $archivo = "NO ADJUNTADO";
       $consecutivo = $this->GenericModel->ultimoConsecutivo();
+      $pqrs =  $request->post("pqrs");
       $paciente_rad = $request->input("paciente_rad");
       $tpdocumento = $request->input("tpdocumento");
       $documento = $request->input("documento");
@@ -98,6 +99,7 @@ class PqrsController extends Controller {
       }
       $pqrs = [
          "consecutivo" => $consecutivo,
+         "pqrs" => $pqrs,
          "tpdocumento" => $tpdocumento,
          "documento" => $documento,
          "expedicion" => $expedicion,
@@ -126,10 +128,9 @@ class PqrsController extends Controller {
          "paciente_rad" => $paciente_rad,
          "archivo" => $archivo
       ];
-
       $this->PqrsModel->create($pqrs);
       $this->createNovedades($pqrs);
-      //$this->Email->sendEmailNotification();
+      $this->GenericModel->actualizarConsecutivo("QUE", $consecutivo);
 
       return response()->json([
         "consecutivo" => $consecutivo,

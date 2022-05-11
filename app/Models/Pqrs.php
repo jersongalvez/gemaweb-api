@@ -42,6 +42,7 @@ class Pqrs extends Model
     //METODO QUE SE ENCARGA DE CREAR EN LA BASE DE DATOS LA PQRS
     public function create($datos) {
       $id = DB::table('QUEJAS')->insertGetId([
+        "COD_AREA_REF" => $datos["pqrs"],
         "CONSECUTIVO" => $datos["consecutivo"],
         "TP_DOC_AFI" => $datos["tpdocumento"],
         "NM_DOC_AFI" => $datos["documento"],
@@ -99,4 +100,5 @@ class Pqrs extends Model
         "ESTADO" => "1"
       ]);
     }
+
 }

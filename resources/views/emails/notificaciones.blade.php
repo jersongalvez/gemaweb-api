@@ -9,7 +9,6 @@
     <style>
         body {
          font-family:Arial, Helvetica, sans-serif;
-         
         }
         .color-blue {
           background-color: #2332CE !important;
@@ -41,7 +40,7 @@
         <img src="https://saludmadreymujer.com/archivos/img/logo.png" width="90px" height="90px" style="margin-left: 250px ;">
         <br>
         <br>
-        <p>¿Como vas?</p>
+        <p>¿Cómo vas?</p>
         <p>Te contamos que recibimos una solicitud de PQRSF ( {{ $pqrs }} )</p>
         <p>Expuesta para la EPSI o/y IPS con los siguientes datos.</p>
     </div>
