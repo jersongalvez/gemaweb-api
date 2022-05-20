@@ -34,7 +34,8 @@ class EmailController extends Controller{
         );
         // // $correo = new NotificacionesMailable;
         Mail::send('emails.notificaciones', $data, function ($message) {
-            $message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
+          $message->to('siau.tolima@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
+        //$message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
         });
     }
 }

@@ -86,6 +86,7 @@ class PqrsController extends Controller {
       $correo = $request->input("correo");
       $ips = $request->input("ips");
       $area = $request->input("area");
+      $cod_area = $request->input("cod_area");
       $zona = $request->input("zona");
       $descripcion = $request->input("descripcion");
       //SE RECUPERAN DATOS ENVIADOS DEL DOCUMENTO
@@ -123,6 +124,7 @@ class PqrsController extends Controller {
          "correo" => $correo,
          "ips" => $ips,
          "area" => $area,
+         "cod_area" => $cod_area,
          "zona" => $zona,
          "descripcion" => $descripcion,
          "paciente_rad" => $paciente_rad,

@@ -62,14 +62,19 @@ class Pqrs extends Model
         "CORREOEMAIL" => $datos["correo"],
         "COD_IPS_QUEJA" => $datos["ips"],
         "COD_AREA_QUEJA" => $datos["area"],
+        "COD_QUEJA_DE" => $datos["cod_area"],
         "FEC_RAD_QUEJA" => date("Y-d-m"),
         "FECHA_REGISTRO" => date("Y-d-m"),
         "COD_ESTADO" => "05",
         "COD_CLA" => "01",
         "NUM_FORMULARIO" => $datos["consecutivo"],
-        "COD_PACIENTE_RAD" => $datos["paciente_rad"]
+        "COD_PACIENTE_RAD" => $datos["paciente_rad"],
+        "FECHA_NACIMIENTO" => $datos["nacimiento"],
+        "EDAD" => $datos["edad"],
+        "SEXO" => $datos["sexo"],
       ]);
-       return $id;
+
+        return $id;
     }
 
     //METODO QUE SE ENCARGA DE CREAR LA NOVEDAD DE ACTUALIZACION DE DATOS DEL USUARIO
