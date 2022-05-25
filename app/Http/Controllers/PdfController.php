@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Codedge\Fpdf\Fpdf\Fpdf;
-
-class PdfController extends Controller {
-
-    //GENERACION DEL PDF DE LA RESPUESTA DE LOS PQRS PARA EL USUARIO
-    public function pdfRespuestaPqrs() {
+class PdfController extends Controller
+{
+     //GENERACION DEL PDF DE LA RESPUESTA DE LOS PQRS PARA EL USUARIO
+     public function pdfRespuestaPqrs() {
         if(date("n") == 1) {
           $mes = "Enero";
         }

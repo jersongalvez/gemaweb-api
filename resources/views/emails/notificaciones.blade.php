@@ -62,7 +62,6 @@
     <div class="container-fluid color-blue" style="border-radius: 10px;">
       <br><br><br><br>
     </div>
-</div>
-
+  </div>
 </body>
 </html>

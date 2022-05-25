@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Generic;
 use Illuminate\Http\Request;
 
-class GenericController extends Controller {
-
+class GenericController extends Controller
+{
     public function __construct(request $request) {
         $this->GenericModel = new Generic();
 

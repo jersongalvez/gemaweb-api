@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-//CARGAR LOS ARCHIVOS PARA EL ENVIO DE EMAIL
-use App\Mail\NotificacionesMailable;
 use Illuminate\Support\Facades\Mail;
-class EmailController extends Controller{
 
+class EmailController extends Controller
+{
     public function __construct(){
 
     }
 
     public function sendEmailNotification(request $request) {
-        // $correo = new NotificacionesMailable;
-        // Mail::to('jerson.galvez@pijaossalud.com.co')->send($correo);
         $pqrs = $request->post("pqrs");
         $nombre = $request->post("nombre");
         $tpdocumento =  $request->post("tpdocumento");
@@ -32,10 +28,13 @@ class EmailController extends Controller{
             'correo' => $correo,
             'mensaje' => $mensaje,
         );
+        // return $this->from('jerson.galvez@pijaossalud.com.co')
+        // ->view('emails.notificaciones');
         // // $correo = new NotificacionesMailable;
         Mail::send('emails.notificaciones', $data, function ($message) {
-          $message->to('siau.tolima@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
-        //$message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
+         // $message->to('siau.tolima@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
+            $message->to('jerson.galvez@pijaossalud.com.co', 'Notificaciones PQRS')->subject('Notificaciones PQRS');
         });
+
     }
 }

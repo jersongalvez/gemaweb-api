@@ -17,7 +17,8 @@ class NotificacionesMailable extends Mailable
      *
      * @return void
      */
-    public function __construct(){
+    public function __construct()
+    {
         //
     }
 
@@ -26,7 +27,8 @@ class NotificacionesMailable extends Mailable
      *
      * @return $this
      */
-    public function build(){
+    public function build()
+    {
         return $this->view('emails.notificaciones');
     }
 }

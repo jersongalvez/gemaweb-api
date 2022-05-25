@@ -10,8 +10,8 @@ class Generic extends Model
 {
     use HasFactory;
 
-    //CONSULTA A LA BASE DE DATOS ENCARGADA DE RETORNAR TODOS LOS TIPOS DE DOCUMENTOS CON ESTADO = 0
-    public function tipoDocumentos ($estado = 0) {
+     //CONSULTA A LA BASE DE DATOS ENCARGADA DE RETORNAR TODOS LOS TIPOS DE DOCUMENTOS CON ESTADO = 0
+     public function tipoDocumentos ($estado = 0) {
         $tipodocumentos = DB::table("TIPOS_DOCUMENTOS")->where("EST_DOCUMENTO", $estado)->orderBy("NOM_DOCUMENTO", "ASC")->get();
 
         return $tipodocumentos;
