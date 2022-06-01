@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //CARGAR LOS CONTROLADORES PARA SER UTILIZADOS EN LAS RUTAS
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PqrsController;
 use App\Http\Controllers\GenericController;
 use App\Http\Controllers\PdfController;
@@ -62,4 +63,6 @@ Route::controller(GenericController::class)->group(function () {
  /******************************************************
   *         RUTAS PARA LOS MODULOS INTERNOS
  *******************************************************/
-
+Route::controller(LoginController::class)->group(function () {
+    Route::get("/recuperarcontrasena", "RecuperarContrasena");
+});
