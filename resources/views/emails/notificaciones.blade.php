@@ -30,7 +30,7 @@
     </style>
 </head>
 <body>
-  <div class="container-border">
+  <div class="container-border" style=" border: 2px solid #2332CE;width: 700px !important;margin-left: 400px;padding: 10px;border-radius: 20px;z-index: 10;">
   <div class="container-fluid color-blue" style="border-radius: 10px;">
       <br><br><br><br>
   </div>

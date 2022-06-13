@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Google_Client;
 use Google_Service_Exception;
-require_once '../public/api-google/vendor/autoload.php';
+require_once '/path/to/your-project/vendor/autoload.php';
+//require_once '../public/api-google/vendor/autoload.php';
 class GoogleDriveController extends Controller
 {
     public function __construct(){
